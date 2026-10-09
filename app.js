@@ -218,6 +218,7 @@ function showNews(n) {
     case 'death': msg = `⚰ ${n.civ} fell to ${n.cause} after ${n.age} years.`; break;
     case 'rise': msg = `✦ A new people: ${n.civ}, in the ${n.theme}.`; break;
     case 'newday': msg = `☀ A new day. The world theme is now: ${n.theme}.`; break;
+    case 'stratum': msg = `⇩ Stratum ${n.level} reached — the dig deepens.`; break;
     case 'gift': msg = n.text; break;
     default: msg = '';
   }
@@ -271,7 +272,7 @@ function doDig() {
     } else if (res.type === 'shards') {
       flash('+' + res.amount + ' ◆ shards');
     } else if (res.type === 'stratum') {
-      showNews({ type: 'newday', theme: 'Stratum ' + res.level + ' reached — deeper now.' });
+      showNews({ type: 'stratum', level: res.level });
       flash('⇩ Stratum ' + res.level);
     }
   }

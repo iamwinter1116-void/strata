@@ -274,6 +274,7 @@ function doDig() {
     } else if (res.type === 'stratum') {
       showNews({ type: 'stratum', level: res.level });
       flash('⇩ Stratum ' + res.level);
+      if (window.MONETIZATION) window.MONETIZATION.atStratumLevel();
     }
   }
   renderAll();

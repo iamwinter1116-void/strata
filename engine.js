@@ -426,4 +426,11 @@ if (typeof module !== 'undefined' && module.exports) {
     defaultState, tick, dig, summonCiv, museumValue,
     THEMES, GOVERNORS, EVENTS, YEARS_PER_SEC, MUSEUM_CAP, CIVS_CAP,
   };
+} else {
+  window.STRATA = {
+    mulberry32, hashStr, civName, clone, mergeDeep,
+    dailySeed, dailyTheme, newCiv, advanceCiv, die, makeArtifact,
+    defaultState, tick, dig, summonCiv, museumValue,
+    THEMES, GOVERNORS, EVENTS, YEARS_PER_SEC, MUSEUM_CAP, CIVS_CAP,
+  };
 }

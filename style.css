@@ -276,7 +276,9 @@ body {
 }
 
 /* --- codex --- */
-.codex-intro { font-size: 12px; color: var(--dim); font-style: italic; text-align: center; margin-bottom: 16px; }
+.codex-intro { font-size: 12px; color: var(--dim); font-style: italic; text-align: center; margin-bottom: 8px; }
+.codex-count { font-size: 10px; color: var(--amber); letter-spacing: 2px; text-transform: uppercase; text-align: center; margin-bottom: 16px; }
+.codex-kicker { font-size: 11px; color: var(--dim); font-style: italic; text-align: center; margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--line); }
 .epitaph {
   border-left: 3px solid var(--line); padding: 8px 12px; margin-bottom: 12px;
 }

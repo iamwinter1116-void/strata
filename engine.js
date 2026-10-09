@@ -42,6 +42,8 @@ function civName(rng) {
   const c = SYLLABLES_B[Math.floor(rng() * SYLLABLES_B.length)];
   let name = (a + b).replace(/^./, ch => ch.toUpperCase());
   if (rng() < 0.3) name += '-' + c.replace(/^./, ch => ch.toUpperCase());
+  // rare disambiguator so the codex never shows identical names
+  if (rng() < 0.18) name += ' ' + ['II', 'III', 'IV', 'V', 'the Younger', 'the Elder'][Math.floor(rng() * 6)];
   return name;
 }
 
@@ -74,12 +76,25 @@ function dailyTheme(seed) {
 }
 
 /* ---------- Creating a civilization ---------- */
+/* Endings are written as complete fates — the codex prints them verbatim. */
 const ENDINGS = [
   'a great plague', 'conquest by strangers from the sea', 'the long drought',
   'a war of annihilation', 'an earthquake that broke their aqueducts',
   'they simply chose to leave', 'they were forgotten',
   'a poisoned well in the capital',
 ];
+
+/* Grammar frames per fate family — no template collisions. */
+const ENDING_FRAMES = {
+  'a great plague': 'fell to a great plague',
+  'conquest by strangers from the sea': 'was conquered by strangers from the sea',
+  'the long drought': 'withered in the long drought',
+  'a war of annihilation': 'burned in a war of annihilation',
+  'an earthquake that broke their aqueducts': 'was broken by an earthquake that severed their aqueducts',
+  'they simply chose to leave': 'did not die — they simply chose to leave',
+  'they were forgotten': 'was not destroyed — it was forgotten',
+  'a poisoned well in the capital': 'was poisoned from within — one well, one capital',
+};
 
 function newCiv(rng, theme) {
   // every civilization carries its doom: rolled at birth, revealed only in death
@@ -429,13 +444,13 @@ if (typeof module !== 'undefined' && module.exports) {
     mulberry32, hashStr, civName, clone, mergeDeep,
     dailySeed, dailyTheme, newCiv, advanceCiv, die, makeArtifact,
     defaultState, tick, dig, summonCiv, museumValue,
-    THEMES, GOVERNORS, EVENTS, YEARS_PER_SEC, MUSEUM_CAP, CIVS_CAP,
+    THEMES, GOVERNORS, EVENTS, ENDINGS, ENDING_FRAMES, YEARS_PER_SEC, MUSEUM_CAP, CIVS_CAP,
   };
 } else {
   window.STRATA = {
     mulberry32, hashStr, civName, clone, mergeDeep,
     dailySeed, dailyTheme, newCiv, advanceCiv, die, makeArtifact,
     defaultState, tick, dig, summonCiv, museumValue,
-    THEMES, GOVERNORS, EVENTS, YEARS_PER_SEC, MUSEUM_CAP, CIVS_CAP,
+    THEMES, GOVERNORS, EVENTS, ENDINGS, ENDING_FRAMES, YEARS_PER_SEC, MUSEUM_CAP, CIVS_CAP,
   };
 }

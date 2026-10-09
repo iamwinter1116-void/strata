@@ -308,12 +308,15 @@ function openPanel(view) {
     title.textContent = 'THE CODEX OF THE DEAD';
     const eps = S.epitaphs.slice().reverse();
     body.innerHTML = eps.length
-      ? '<div class="codex-intro">Every civilization dies. These are the ones you have outlived.</div>' + eps.map((e, i) => `
+      ? `<div class="codex-intro">Every civilization dies. These are the ones you have outlived.</div>` +
+        `<div class="codex-count">${eps.length} of ${S.stats.deadCivs || eps.length} — newest first</div>` +
+        eps.map((e, i) => `
         <div class="epitaph ${i === 0 ? 'first' : ''}">
           <div class="name">${escapeHtml(e.name)}</div>
-          <div class="cause">died of ${escapeHtml(e.cause)}</div>
+          <div class="cause">${escapeHtml(STRATA.ENDING_FRAMES[e.cause] || e.cause)}</div>
           <div class="meta">${e.age} years · ${e.reigns} reigns · the ${escapeHtml(e.theme)}</div>
-        </div>`).join('')
+        </div>`).join('') +
+        `<div class="codex-kicker">The earth does not mourn. It only remembers.</div>`
       : '<div class="empty-note">No one has died yet.<br>They will.</div>';
   }
 }
@@ -397,8 +400,12 @@ function escapeHtml(s) {
   }[c]));
 }
 
-/* hold-to-dig repeat loop */
-setInterval(() => { if (holding) tryDig(); }, 100);
+/* hold-to-dig repeat loop — rAF-driven so slow frames never skip digs */
+function holdLoop() {
+  if (holding) tryDig();
+  requestAnimationFrame(holdLoop);
+}
+requestAnimationFrame(holdLoop);
 
 /* debug + boot */
 window.STRATA_DEBUG = {

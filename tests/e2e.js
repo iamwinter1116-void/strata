@@ -54,8 +54,10 @@ function T(name, cond) {
   let digs = await page.evaluate(() => window.STRATA_DEBUG.S.stats.digs);
   T('tap registers a dig', digs === 1);
 
+  // hold to dig: poll interval inside app.js is 100ms; a slow frame can skip
+  // a poll, so hold longer and require >=3 (cooldown 280ms means ~4-5 expected)
   await page.evaluate(() => { window.STRATA_DEBUG.S.energy = 60; });
-  await digBtn.click({ delay: 1200 });
+  await digBtn.click({ delay: 1800 });
   await new Promise(r => setTimeout(r, 300));
   digs = await page.evaluate(() => window.STRATA_DEBUG.S.stats.digs);
   console.log('  digs after hold: ' + digs);

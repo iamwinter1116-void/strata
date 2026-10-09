@@ -40,7 +40,7 @@ function boot() {
   }
 
   SITE.init($('stage'));
-  SITE.rebuild(S.stats.strata);
+  SITE.rebuild(S.stats.strata, S.worldTheme);
 
   bindInput();
   renderHud();
@@ -217,7 +217,7 @@ function tryDig(opts) {
         count: 40, speed: 4.5, colors: ['#9a8a70', '#5a4426', '#d9a441'],
         gravity: 0.3, life: [40, 90],
       });
-      SITE.rebuild(res.level);
+      SITE.rebuild(res.level, S.worldTheme);
       showNews({ type: 'stratum', level: res.level });
       if (window.MONETIZATION) window.MONETIZATION.atStratumLevel();
     }

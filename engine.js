@@ -230,25 +230,30 @@ const ARTIFACT_ICONS = {
 };
 
 function makeArtifact(civ, rng, digLevel) {
-  const wealthTier = Math.min(5, 1 + Math.floor(civ.wealth / 150));
-  const matPool = MATERIALS.filter(m => m.rarity <= wealthTier + 1);
+  // hardened: legacy saves may lack wealth/chronicle fields
+  const wealth = Number.isFinite(civ.wealth) ? civ.wealth : 50;
+  const reigns = Number.isFinite(civ.reigns) ? civ.reigns : 1;
+  const wealthTier = Math.min(5, 1 + Math.floor(wealth / 150));
+  let matPool = MATERIALS.filter(m => m.rarity <= wealthTier + 1);
+  if (!matPool.length) matPool = MATERIALS;
   const mat = matPool[Math.floor(rng() * matPool.length)];
   const form = FORMS[Math.floor(rng() * FORMS.length)];
-  const evo = civ.chronicle.length
-    ? civ.chronicle[Math.floor(rng() * civ.chronicle.length)]
+  const chronicle = Array.isArray(civ.chronicle) ? civ.chronicle : [];
+  const evo = chronicle.length
+    ? chronicle[Math.floor(rng() * chronicle.length)]
     : null;
-  const era = 1 + Math.floor(rng() * Math.max(1, Math.floor(civ.age / 50) || 1));
+  const era = 1 + Math.floor(rng() * Math.max(1, Math.floor((Number.isFinite(civ.age) ? civ.age : 0) / 50) || 1));
   const quality = Math.floor(rng() * 100);
   const levelBoost = 1 + (digLevel || 1) * 0.1;
   const value = Math.max(1, Math.round(
-    (mat.rarity * 6 + quality / 5) * (evo ? 1.5 : 1) * (1 + civ.reigns / 20) * levelBoost
+    (mat.rarity * 6 + quality / 5) * (evo ? 1.5 : 1) * (1 + reigns / 20) * levelBoost
   ));
   return {
     id: 'a' + Math.floor(rng() * 1e9).toString(36) + '-' + Date.now().toString(36),
     mat: mat.label, matId: mat.id, rarity: mat.rarity,
     form: form.label, formId: form.id,
     icon: ARTIFACT_ICONS[form.id],
-    civ: civ.name, civAge: Math.floor(civ.age), theme: civ.theme,
+    civ: civ.name, civAge: Math.floor(Number.isFinite(civ.age) ? civ.age : 0), theme: civ.theme || 'unknown land',
     eraLabel: 'Era ' + era,
     boundEvent: evo ? evo.txt : 'crafted in quiet years',
     boundEventAge: evo ? evo.age : null,

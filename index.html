@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#171008">
@@ -15,61 +15,69 @@
 </head>
 <body>
 <div id="app">
-  <!-- TOP BAR -->
-  <header id="topbar">
-    <div id="brand">STRATA<span id="day-badge">Day 1</span></div>
-    <div id="resources">
-      <div class="res" title="Shards — currency of the Survey">
-        <span class="res-icon">◆</span><span id="shards">0</span>
-      </div>
-      <div class="res" title="Energy — one per dig">
-        <span class="res-icon">⚡</span><span id="energy">60</span>
-      </div>
+
+  <!-- HUD TOP -->
+  <header id="hud">
+    <div id="hud-left">
+      <div id="brand">STRATA</div>
+      <div id="world-theme">—</div>
+    </div>
+    <div id="hud-right">
+      <div class="res" id="res-shards"><span class="res-ico">◆</span><b id="shards">0</b></div>
+      <div class="res" id="res-energy"><span class="res-ico">⚡</span><b id="energy">60</b></div>
+      <button id="btn-sound" aria-label="Toggle sound">♪</button>
     </div>
   </header>
-
-  <!-- WORLD STRIP -->
-  <div id="worldstrip">
-    <span id="world-theme">forgotten river valley</span>
-    <span id="world-clock">—</span>
-  </div>
 
   <!-- NEWS TICKER -->
   <div id="ticker" aria-live="polite"></div>
 
-  <!-- MAIN TABS -->
-  <main id="main">
-    <section id="view-dig" class="view active">
-      <div id="strata-viz"></div>
-      <div id="dig-progress-wrap">
-        <div id="dig-progress-bar"><div id="dig-progress-fill"></div></div>
-        <div id="dig-progress-label">Stratum 1</div>
-      </div>
-      <button id="dig-btn" aria-label="Excavate one layer">
-        <span id="dig-btn-main">DIG</span>
-        <span id="dig-btn-sub">each dig unearths years of history</span>
-      </button>
-      <button id="summon-btn">Summon a people · <span id="summon-cost">20</span> ◆</button>
-    </section>
+  <!-- GAME STAGE -->
+  <main id="stage-wrap">
+    <canvas id="stage"></canvas>
+    <div id="vignette"></div>
 
-    <section id="view-civs" class="view">
-      <div id="civ-list"></div>
-    </section>
+    <div id="civ-pill">
+      <span id="civ-pill-dot"></span>
+      <span id="civ-pill-text">—</span>
+    </div>
 
-    <section id="view-museum" class="view">
-      <div id="museum-summary"></div>
-      <div id="museum-grid"></div>
-    </section>
+    <div id="depth-readout">—</div>
 
-    <section id="view-codex" class="view">
-      <div id="codex-intro">Every civilization dies. These are the ones you have outlived.</div>
-      <div id="epitaph-list"></div>
-    </section>
+    <div id="energy-wrap"><div id="energy-fill"></div></div>
+
+    <button id="dig-btn" aria-label="Dig">
+      <span id="dig-label">HOLD TO DIG</span>
+      <span id="dig-sub">every strike unearths years</span>
+    </button>
   </main>
+
+  <!-- SUMMON STRIP -->
+  <div id="summon-strip">
+    <button id="summon-btn">✦ Summon a people — <b id="summon-cost">20</b> ◆</button>
+  </div>
+
+  <!-- TAB RAIL -->
+  <nav id="nav">
+    <button class="nav-btn active" data-view="dig"><span>⛏</span>Site</button>
+    <button class="nav-btn" data-view="civs"><span>⌂</span>People</button>
+    <button class="nav-btn" data-view="museum"><span>◈</span>Museum</button>
+    <button class="nav-btn" data-view="codex"><span>✝</span>Codex</button>
+  </nav>
+
+  <!-- OVERLAY PANEL -->
+  <div id="panel" class="hidden">
+    <div id="panel-head">
+      <button id="panel-back">‹ back</button>
+      <div id="panel-title">—</div>
+    </div>
+    <div id="panel-body"></div>
+  </div>
 
   <!-- ARTIFACT MODAL -->
   <div id="modal" class="hidden">
     <div id="modal-card">
+      <div id="modal-shine"></div>
       <div id="modal-icon">◈</div>
       <div id="modal-title">Artifact</div>
       <div id="modal-sub">—</div>
@@ -79,15 +87,10 @@
     </div>
   </div>
 
-  <!-- NAV -->
-  <nav id="nav">
-    <button class="nav-btn active" data-view="dig"><span>⛏</span>Excavate</button>
-    <button class="nav-btn" data-view="civs"><span>⌂</span>Civilizations</button>
-    <button class="nav-btn" data-view="museum"><span>◈</span>Museum</button>
-    <button class="nav-btn" data-view="codex"><span>✝</span>Codex</button>
-  </nav>
 </div>
 <script src="engine.js"></script>
+<script src="fx.js"></script>
+<script src="site.js"></script>
 <script src="monetization.js"></script>
 <script src="app.js"></script>
 <script>

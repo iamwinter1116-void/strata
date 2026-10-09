@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#171008">
+<meta name="description" content="STRATA — dig into a civilization that lives while you sleep. Every artifact carries a true story.">
+<title>STRATA — The Civilization Beneath</title>
+
+
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- TOP BAR -->
+  <header id="topbar">
+    <div id="brand">STRATA<span id="day-badge">Day 1</span></div>
+    <div id="resources">
+      <div class="res" title="Shards — currency of the Survey">
+        <span class="res-icon">◆</span><span id="shards">0</span>
+      </div>
+      <div class="res" title="Energy — one per dig">
+        <span class="res-icon">⚡</span><span id="energy">60</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- WORLD STRIP -->
+  <div id="worldstrip">
+    <span id="world-theme">forgotten river valley</span>
+    <span id="world-clock">—</span>
+  </div>
+
+  <!-- NEWS TICKER -->
+  <div id="ticker" aria-live="polite"></div>
+
+  <!-- MAIN TABS -->
+  <main id="main">
+    <section id="view-dig" class="view active">
+      <div id="strata-viz"></div>
+      <div id="dig-progress-wrap">
+        <div id="dig-progress-bar"><div id="dig-progress-fill"></div></div>
+        <div id="dig-progress-label">Stratum 1</div>
+      </div>
+      <button id="dig-btn" aria-label="Excavate one layer">
+        <span id="dig-btn-main">DIG</span>
+        <span id="dig-btn-sub">each dig unearths years of history</span>
+      </button>
+      <button id="summon-btn">Summon a people · <span id="summon-cost">20</span> ◆</button>
+    </section>
+
+    <section id="view-civs" class="view">
+      <div id="civ-list"></div>
+    </section>
+
+    <section id="view-museum" class="view">
+      <div id="museum-summary"></div>
+      <div id="museum-grid"></div>
+    </section>
+
+    <section id="view-codex" class="view">
+      <div id="codex-intro">Every civilization dies. These are the ones you have outlived.</div>
+      <div id="epitaph-list"></div>
+    </section>
+  </main>
+
+  <!-- ARTIFACT MODAL -->
+  <div id="modal" class="hidden">
+    <div id="modal-card">
+      <div id="modal-icon">◈</div>
+      <div id="modal-title">Artifact</div>
+      <div id="modal-sub">—</div>
+      <div id="modal-story">—</div>
+      <div id="modal-meta">—</div>
+      <button id="modal-close">Keep it</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <button class="nav-btn active" data-view="dig"><span>⛏</span>Excavate</button>
+    <button class="nav-btn" data-view="civs"><span>⌂</span>Civilizations</button>
+    <button class="nav-btn" data-view="museum"><span>◈</span>Museum</button>
+    <button class="nav-btn" data-view="codex"><span>✝</span>Codex</button>
+  </nav>
+</div>
+<script src="engine.js"></script>
+<script src="monetization.js"></script>
+<script>window.MONETIZATION.install('test-game-id-123');</script>
+<script src="app.js"></script>
+
+</body>
+</html>

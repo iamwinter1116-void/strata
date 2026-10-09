@@ -1,13 +1,16 @@
 /* STRATA service worker — cache-first, offline-complete */
 'use strict';
 
-const CACHE = 'strata-v1';
+const CACHE = 'strata-v2';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
   './engine.js',
+  './fx.js',
+  './site.js',
+  './monetization.js',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',

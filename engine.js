@@ -94,6 +94,8 @@ const ENDING_FRAMES = {
   'they simply chose to leave': 'did not die — they simply chose to leave',
   'they were forgotten': 'was not destroyed — it was forgotten',
   'a poisoned well in the capital': 'was poisoned from within — one well, one capital',
+  'population collapse': 'dwindled until none remained',
+  'total collapse of order': 'tore itself apart',
 };
 
 function newCiv(rng, theme) {
@@ -208,7 +210,7 @@ function advanceCiv(civ, years, rng) {
     // death checks — environmental early deaths, then the doom-age always comes
     if (civ.population <= 12 && rng() < 0.30 * stepScale) die(civ, 'population collapse');
     else if (civ.stability <= 2) die(civ, 'total collapse of order');
-    else if (civ.age >= civ.doomAge) die(civ, 'the ' + civ.ending);
+    else if (civ.age >= civ.doomAge) die(civ, civ.ending);
   }
   if (civ.chronicle.length > 60) civ.chronicle = civ.chronicle.slice(-60);
 }

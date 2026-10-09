@@ -307,13 +307,19 @@ function openPanel(view) {
   } else if (view === 'codex') {
     title.textContent = 'THE CODEX OF THE DEAD';
     const eps = S.epitaphs.slice().reverse();
+    const frame = (cause) => {
+      if (!cause) return 'passed beyond memory';
+      // normalize legacy saves that stored 'the <ending>'
+      const key = cause.replace(/^the\s+/, '');
+      return STRATA.ENDING_FRAMES[key] || STRATA.ENDING_FRAMES[cause] || cause;
+    };
     body.innerHTML = eps.length
       ? `<div class="codex-intro">Every civilization dies. These are the ones you have outlived.</div>` +
         `<div class="codex-count">${eps.length} of ${S.stats.deadCivs || eps.length} — newest first</div>` +
         eps.map((e, i) => `
         <div class="epitaph ${i === 0 ? 'first' : ''}">
           <div class="name">${escapeHtml(e.name)}</div>
-          <div class="cause">${escapeHtml(STRATA.ENDING_FRAMES[e.cause] || e.cause)}</div>
+          <div class="cause">${escapeHtml(frame(e.cause))}</div>
           <div class="meta">${e.age} years · ${e.reigns} reigns · the ${escapeHtml(e.theme)}</div>
         </div>`).join('') +
         `<div class="codex-kicker">The earth does not mourn. It only remembers.</div>`
